@@ -99,8 +99,8 @@ class MainActivity : AppCompatActivity() {
 
 
 
-        //Finding questionTextView through binding
-        //Moving to next and previous questions on click
+//Finding questionTextView through binding
+//Moving to next and previous questions on click
         binding.questionTextView.setOnClickListener {
             currentIndex = (currentIndex + 1) % questionBank.size
             updateQuestion()
@@ -154,13 +154,13 @@ private fun showPoints() {
 
 
 // (New) Comparing current index with total question bank size
-// (New) What will not output (Will not pick up and display once condition here is met)
+// (Question) What will not output (Will not pick up and display once condition here is met)
 //Example: Answer everything correct and you will only get 83.3%
     if (currentIndex == questionBank.size) {
 
 
 // (New) Displaying toast if condition is met
-// (New) What will not output (Will not pick up and display once condition here is met)
+// (Question) What will not output (Will not pick up and display once condition here is met)
         Toast.makeText(
             this,
             "$percentageNew%",
