@@ -65,7 +65,6 @@ class MainActivity : AppCompatActivity() {
 
 
 
-
 //My on onclick listener for the true button, and coding it with 'True!'
         binding.trueButton.setOnClickListener {
 
@@ -75,9 +74,8 @@ class MainActivity : AppCompatActivity() {
             binding.trueButton.isEnabled = !(binding.trueButton.isEnabled)
             binding.falseButton.isEnabled = !(binding.falseButton.isEnabled)
 
-// (New) Showing calculation function based on Pressing True Button
-//This part seems to be working
-            showPoints()
+
+
         }
 
 
@@ -92,9 +90,7 @@ class MainActivity : AppCompatActivity() {
             binding.trueButton.isEnabled = !(binding.trueButton.isEnabled)
 
 
-// (New) Showing calculation function based on Pressing False Button
-//This part seems to be working
-            showPoints()
+
         }
 
 
@@ -123,12 +119,16 @@ class MainActivity : AppCompatActivity() {
 
             binding.trueButton.isEnabled = true
 
-// (New) Showing calculation function based on Pressing Next Button
-//This part seems to be working
+            // (New) Showing calculation function based on Pressing Next Button
+            //This part seems to be working
             showPoints()
+
         }
 
+
         updateQuestion()
+
+
     }
 
 
@@ -181,9 +181,11 @@ private fun showPoints() {
             .show()
 
 
+
 // (New) Resetting number correct to 0, once currentIndex is at Maximum
 //This part seems to be working
         numberCorrect = 0
+
 
     }
 
@@ -227,16 +229,17 @@ private fun showPoints() {
             }
 
 
-    if (userAnswer == correctAnswer) {
+    if (userAnswer == correctAnswer)
 
 // (New Change) Incrementing Number correct after second condition
-//This part seems to be working
+//This part still keeping track of answers except for one
         numberCorrect++
 
 
         Toast.makeText(this, messageResId, Toast.LENGTH_LONG)
             .show()
-    }
+
+
 
     }
 
