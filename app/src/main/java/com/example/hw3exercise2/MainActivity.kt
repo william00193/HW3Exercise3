@@ -215,9 +215,7 @@ private fun showPoints() {
 //Start of condition
         val messageResId = if (userAnswer == correctAnswer) {
 
-// (New) Incrementing Number correct
-//This part seems to be working
-            numberCorrect++
+
 
             R.string.correct_toast
 
@@ -229,8 +227,16 @@ private fun showPoints() {
             }
 
 
+    if (userAnswer == correctAnswer) {
+
+// (New Change) Incrementing Number correct after second condition
+//This part seems to be working
+        numberCorrect++
+
+
         Toast.makeText(this, messageResId, Toast.LENGTH_LONG)
             .show()
+    }
 
     }
 
