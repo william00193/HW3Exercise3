@@ -4,12 +4,12 @@ import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import com.google.android.material.snackbar.Snackbar
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import com.example.hw3exercise2.databinding.ActivityMainBinding
 
-import com.google.android.material.snackbar.Snackbar
 import java.lang.Math.round
 import java.math.RoundingMode
 import kotlin.math.roundToInt
@@ -24,30 +24,26 @@ private const val TAG = "MainActivity"
 class MainActivity : AppCompatActivity() {
 
 
-
-//creating a variable for the binding
     private lateinit var binding: ActivityMainBinding
 
 
 
-//Question bank
     private val questionBank = listOf(
-
         question(R.string.question_australia, true),
-            question(R.string.question_oceans, true),
-             question(R.string.question_mideast, false),
-                 question(R.string.question_africa, false),
-                     question(R.string.question_americas, true),
-                        question(R.string.question_asia, true),
-
+        question(R.string.question_oceans, true),
+        question(R.string.question_mideast, false),
+        question(R.string.question_africa, false),
+        question(R.string.question_americas, true),
+        question(R.string.question_asia, true),
     )
 
 
 
-// (New) hardcoded values for CurrentIndex and NumberCorrect
-//This part seems to be working
-    private var currentIndex = 0
+// (New) added a new variable to substitute for currentIndex and im getting something different
+    private var questionCount = 0
+
     private var numberCorrect = 0
+    private var currentIndex = 0
 
 
 
@@ -55,79 +51,68 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
 
-//First Log for on create action
             Log.d(TAG, "onCreate (Bundle?) called")
-
-
 
             binding = ActivityMainBinding.inflate(layoutInflater)
             setContentView(binding.root)
 
 
 
-//My on onclick listener for the true button, and coding it with 'True!'
+
         binding.trueButton.setOnClickListener {
 
             checkAnswer(true)
-
-//Turing off both the true and false buttons once true is selected
             binding.trueButton.isEnabled = !(binding.trueButton.isEnabled)
             binding.falseButton.isEnabled = !(binding.falseButton.isEnabled)
-
-
 
         }
 
 
 
-//My on onclick listener for the false button, and coding it with 'False!'
+
         binding.falseButton.setOnClickListener {
 
             checkAnswer(false)
-
-//Turing off both the true and false buttons once false is selected
             binding.falseButton.isEnabled = !(binding.falseButton.isEnabled)
             binding.trueButton.isEnabled = !(binding.trueButton.isEnabled)
-
-
 
         }
 
 
 
-//Finding questionTextView through binding
-//Moving to next and previous questions on click
+
         binding.questionTextView.setOnClickListener {
             currentIndex = (currentIndex + 1) % questionBank.size
             updateQuestion()
         }
 
+
+
+
         binding.previousButton.setOnClickListener {
             currentIndex = (currentIndex - 1) % questionBank.size
-
             updateQuestion()
         }
+
+
 
 
         binding.nextButton.setOnClickListener {
 
             currentIndex = (currentIndex + 1) % questionBank.size
 
-            updateQuestion()
-
             binding.falseButton.isEnabled = true
-
             binding.trueButton.isEnabled = true
 
-            // (New) Showing calculation function based on Pressing Next Button
-            //This part seems to be working
+//(New) variable Increment of questionCount
+            questionCount++
+
+            updateQuestion()
             showPoints()
 
         }
 
-
         updateQuestion()
-
 
     }
 
@@ -138,58 +123,86 @@ class MainActivity : AppCompatActivity() {
 
 
 
-// (New) Will not pick up on the first part of the IF statement
-//Only displaying percentage as a result of the Else If section and
-//Not picking up on the last question
+
+
+
+
+//(New) Function I am Having problems with getting to output correctly
 private fun showPoints() {
 
 
-// (New) Taking count of Number Correct turning it into a double, dividing, and multiplying by 100
     val percentage = (numberCorrect.toDouble() / questionBank.size) * 100
-
-// (New) Turing 'percentage' into single decimal format
     val percentageNew = "%.1f".format(percentage)
 
 
-
-
-// (New) Comparing current index with total question bank size
-// (Question) What will not output (Will not pick up and display once condition here is met)
 //Example: Answer everything correct and you will only get 83.3%
+//(New) Will not take into consideration the IF statement, is ignoring the currentIndex
+//(New) Is skipping to the second part of the condition, displaying red snackBar
     if (currentIndex == questionBank.size) {
 
 
-// (New) Displaying toast if condition is met
-// (Question) What will not output (Will not pick up and display once condition here is met)
-        Toast.makeText(
-            this,
+//Will Change back to a toast after condition is ready
+//        Toast.makeText(
+//            this,
+//            "$percentageNew%",
+//            Toast.LENGTH_SHORT
+//        )   //Showing the toast
+//            .show()
+
+
+//(New)When If statement is working will display a green Snackbar instead of red
+     val snackBar = Snackbar.make (
+         findViewById(android.R.id.content),
             "$percentageNew%",
-            Toast.LENGTH_SHORT
-        )   //Showing the toast
-            .show()
+            Snackbar.LENGTH_LONG
+        )
+
+        snackBar.setTextColor(Color.BLACK)
+        snackBar.setBackgroundTint(Color.GREEN)
+        snackBar.show()
 
 
 
 
-// (New) Displaying toast if condition is not met, or is equal to a set value
-    } else if (currentIndex == 5)  {
-        Toast.makeText(
-            this,
+//(New) when setting (questionCount == 6) everything displays as I would hope
+//(New) This is increasing when you press the next button, displaying at the end, and resetting
+    } else if (questionCount == 6)  {
+
+
+
+//Will Change back to a toast after condition is ready
+//        Toast.makeText(
+//            this,
+//            "$percentageNew%",
+//            Toast.LENGTH_SHORT
+//        )   //Showing the toast
+//            .show()
+
+
+
+//(New)Displaying red Snackbar immediately after the sixth question
+        val snackBar = Snackbar.make (
+            findViewById(android.R.id.content),
             "$percentageNew%",
-            Toast.LENGTH_SHORT
-        )   //Showing the toast
-            .show()
+            Snackbar.LENGTH_SHORT
+        )
+
+        snackBar.setTextColor(Color.BLACK)
+        snackBar.setBackgroundTint(Color.RED)
+        snackBar.show()
 
 
-
-// (New) Resetting number correct to 0, once currentIndex is at Maximum
-//This part seems to be working
         numberCorrect = 0
 
+//(New) This different variable is still resetting once you have completed
+// the 6 different questions but for some reason is doing what I want it to
+        questionCount = 0
 
     }
-
 }
+
+
+
 
 
 
@@ -205,43 +218,62 @@ private fun showPoints() {
 
 
 
+
+
+
+
+
+
+
+
 //Function to check if user answer is correct
     private fun checkAnswer(userAnswer: Boolean) {
 
 
-//Setting correct answer to what is in question bank
         val correctAnswer = questionBank[currentIndex].answer
 
 
+        val messageResId = if (userAnswer == correctAnswer)
 
-//Start of condition
-        val messageResId = if (userAnswer == correctAnswer) {
-
-
-
+        {
             R.string.correct_toast
 
         } else
 
             {
                 R.string.incorrect_toast
-
             }
 
 
+//(New) Added 9/19 to take into consideration left out question
     if (userAnswer == correctAnswer)
 
-// (New Change) Incrementing Number correct after second condition
-//This part still keeping track of answers except for one
-        numberCorrect++
 
+        numberCorrect++
 
         Toast.makeText(this, messageResId, Toast.LENGTH_LONG)
             .show()
 
-
-
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
