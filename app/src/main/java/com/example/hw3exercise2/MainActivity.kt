@@ -1,23 +1,14 @@
 package com.example.hw3exercise2
 
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import com.google.android.material.snackbar.Snackbar
-import android.view.View
-import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.hw3exercise2.databinding.ActivityMainBinding
-
-import java.lang.Math.round
-import java.math.RoundingMode
-import kotlin.math.roundToInt
+import com.google.android.material.snackbar.Snackbar
 
 
-//Property that the log function takes, called a TAG
-//filters down verbose logging
-//Keeps function call cleaner
 private const val TAG = "MainActivity"
 
 
@@ -39,7 +30,8 @@ class MainActivity : AppCompatActivity() {
 
 
 
-// (New) added a new variable to substitute for currentIndex and im getting something different
+//// (New) added a new variable to substitute for currentIndex
+// New variable addition seems to be making the condition work for some reason
     private var questionCount = 0
 
     private var numberCorrect = 0
@@ -83,7 +75,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.questionTextView.setOnClickListener {
             currentIndex = (currentIndex + 1) % questionBank.size
-            updateQuestion()
+            //deleted updateQuestion listener
         }
 
 
@@ -91,7 +83,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.previousButton.setOnClickListener {
             currentIndex = (currentIndex - 1) % questionBank.size
-            updateQuestion()
+            //deleted updateQuestion listener
         }
 
 
@@ -104,11 +96,12 @@ class MainActivity : AppCompatActivity() {
             binding.falseButton.isEnabled = true
             binding.trueButton.isEnabled = true
 
-//(New) variable Increment of questionCount
+
+//(New) variable Increment of questionCount,
             questionCount++
 
             updateQuestion()
-            showPoints()
+
 
         }
 
@@ -127,78 +120,35 @@ class MainActivity : AppCompatActivity() {
 
 
 
-//(New) Function I am Having problems with getting to output correctly
+//(New) I have now moved the condition to the updateQuestion function
+//Things seem to be working correctly now, thanks for the help professor!
 private fun showPoints() {
-
 
     val percentage = (numberCorrect.toDouble() / questionBank.size) * 100
     val percentageNew = "%.1f".format(percentage)
 
 
-//Example: Answer everything correct and you will only get 83.3%
-//(New) Will not take into consideration the IF statement, is ignoring the currentIndex
-//(New) Is skipping to the second part of the condition, displaying red snackBar
-    if (currentIndex == questionBank.size) {
 
-
-//Will Change back to a toast after condition is ready
+//(New) I will change this out when it comes time to turn things In
+//There is to long of a delay when testing
 //        Toast.makeText(
 //            this,
 //            "$percentageNew%",
 //            Toast.LENGTH_SHORT
 //        )   //Showing the toast
 //            .show()
-
-
-//(New)When If statement is working will display a green Snackbar instead of red
+//
+//(New)When If statement is working will display a green Snackbar
      val snackBar = Snackbar.make (
          findViewById(android.R.id.content),
             "$percentageNew%",
-            Snackbar.LENGTH_LONG
+            Snackbar.LENGTH_SHORT
         )
 
         snackBar.setTextColor(Color.BLACK)
         snackBar.setBackgroundTint(Color.GREEN)
         snackBar.show()
 
-
-
-
-//(New) when setting (questionCount == 6) everything displays as I would hope
-//(New) This is increasing when you press the next button, displaying at the end, and resetting
-    } else if (questionCount == 6)  {
-
-
-
-//Will Change back to a toast after condition is ready
-//        Toast.makeText(
-//            this,
-//            "$percentageNew%",
-//            Toast.LENGTH_SHORT
-//        )   //Showing the toast
-//            .show()
-
-
-
-//(New)Displaying red Snackbar immediately after the sixth question
-        val snackBar = Snackbar.make (
-            findViewById(android.R.id.content),
-            "$percentageNew%",
-            Snackbar.LENGTH_SHORT
-        )
-
-        snackBar.setTextColor(Color.BLACK)
-        snackBar.setBackgroundTint(Color.RED)
-        snackBar.show()
-
-
-        numberCorrect = 0
-
-//(New) This different variable is still resetting once you have completed
-// the 6 different questions but for some reason is doing what I want it to
-        questionCount = 0
-
-    }
 }
 
 
@@ -213,6 +163,20 @@ private fun showPoints() {
     private fun updateQuestion() {
         val questionTextResId = questionBank[currentIndex].textResId
         binding.questionTextView.setText(questionTextResId)
+
+
+   if (questionCount == questionBank.size) {
+
+       showPoints()
+       numberCorrect = 0
+
+       questionCount = 0
+
+   }  else  {
+
+
+        }
+
     }
 
 
@@ -230,19 +194,15 @@ private fun showPoints() {
     private fun checkAnswer(userAnswer: Boolean) {
 
 
-        val correctAnswer = questionBank[currentIndex].answer
+    val correctAnswer = questionBank[currentIndex].answer
 
 
-        val messageResId = if (userAnswer == correctAnswer)
+    val messageResId = if (userAnswer == correctAnswer) {
+        R.string.correct_toast
 
-        {
-            R.string.correct_toast
-
-        } else
-
-            {
-                R.string.incorrect_toast
-            }
+    } else {
+        R.string.incorrect_toast
+    }
 
 
 //(New) Added 9/19 to take into consideration left out question
@@ -251,14 +211,14 @@ private fun showPoints() {
 
         numberCorrect++
 
-        Toast.makeText(this, messageResId, Toast.LENGTH_LONG)
+
+
+ Toast.makeText(this, messageResId, Toast.LENGTH_SHORT)
             .show()
 
-    }
 
 
-
-
+}
 
 
 

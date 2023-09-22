@@ -16,7 +16,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    //    Turing on ViewBinding feature
+    //    Turning on ViewBinding feature
     buildFeatures {
         viewBinding true
     }
