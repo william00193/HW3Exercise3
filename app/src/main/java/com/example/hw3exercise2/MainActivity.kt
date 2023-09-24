@@ -2,7 +2,9 @@ package com.example.hw3exercise2
 
 import android.graphics.Color
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.hw3exercise2.databinding.ActivityMainBinding
@@ -107,12 +109,11 @@ class MainActivity : AppCompatActivity() {
 
         updateQuestion()
 
+
+
+
+
     }
-
-
-
-
-
 
 
 
@@ -131,24 +132,28 @@ private fun showPoints() {
 
 //(New) I will change this out when it comes time to turn things In
 //There is to long of a delay when testing
-//        Toast.makeText(
-//            this,
-//            "$percentageNew%",
-//            Toast.LENGTH_SHORT
-//        )   //Showing the toast
-//            .show()
-//
+    Toast.makeText(
+        this,
+        "$percentageNew%",
+        Toast.LENGTH_SHORT
+    )   //Showing the toast
+
+        .show()
+
+
+
+
 //(New)When If statement is working will display a green Snackbar
-     val snackBar = Snackbar.make (
-         findViewById(android.R.id.content),
-            "$percentageNew%",
-            Snackbar.LENGTH_SHORT
-        )
-
-        snackBar.setTextColor(Color.BLACK)
-        snackBar.setBackgroundTint(Color.GREEN)
-        snackBar.show()
-
+//     val snackBar = Snackbar.make (
+//         findViewById(android.R.id.content),
+//            "$percentageNew%",
+//            Snackbar.LENGTH_SHORT
+//        )
+//
+//        snackBar.setTextColor(Color.BLACK)
+//        snackBar.setBackgroundTint(Color.GREEN)
+//        snackBar.show()
+//
 }
 
 

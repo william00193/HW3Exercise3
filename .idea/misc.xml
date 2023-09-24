@@ -3,8 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/custom.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_baseline_arrow_right_24.xml" value="0.3" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.20555555555555555" />
+        <entry key="app/src/main/res/layout/crumbocruton.xml" value="0.3" />
+        <entry key="app/src/main/res/layout/crumbocruton2.xml" value="0.3140625" />
+        <entry key="app/src/main/res/layout/custom.xml" value="0.19537037037037036" />
+        <entry key="app/src/main/res/layout/custom_layout.xml" value="0.19537037037037036" />
       </map>
     </option>
   </component>
